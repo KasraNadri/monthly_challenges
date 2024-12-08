@@ -23,14 +23,11 @@ monthly_challenges = {
 # Create your views here.
 
 def index(req):
-    list_items = ""
-    for month in monthly_challenges.keys():
-        month_path = reverse("month-challenge", args=[month])
-        list_items += f"<li><a href = '{month_path}'> {month.upper()} </a></li>"
+    return render (req, "challenges/index.html", {
+        "months": list(monthly_challenges.keys())
+ })
 
-    response_data = f"<ul> {list_items} </ul>"
-    return HttpResponse(response_data)
-
+#========== CHALLENGES (GETS MONTH BY NUMBER) ==========
 def monthly_challenge_by_number(req, month):
     months = list(monthly_challenges.keys())
 
@@ -41,10 +38,13 @@ def monthly_challenge_by_number(req, month):
     redirect_path = reverse("month-challenge", args = [redirect_month] ) #----- /challenges/january
     return HttpResponseRedirect(redirect_path) #-- REDIRECTION
 
+#========== CHALLENGES (GETS MONTH BY MONTH) ==========
 def monthly_challenge(req, month):
     try:
         challenge_text = monthly_challenges[month]
-        response_data = f"<h1>{challenge_text}</h1>"
-        return HttpResponse(response_data)
+        return render(req, "challenges/challenge.html", {
+            "text": challenge_text,
+            "month": month
+        })
     except:
         return HttpResponseNotFound("<h1>This month is not supported</h1>")

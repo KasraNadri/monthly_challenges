@@ -1,5 +1,10 @@
 {% extends 'base.html'%}
 
+{% block css_files %}
+    <link rel="stylesheet" href = "{% static 'challenges/challenge.css' %}">
+    <link rel="stylesheet" href = "{% static 'challenges/includes/header.css' %}">
+{% endblock %}
+
 <!------- PAGE TITLE -------->
 {% block page_title%}
     {{ month | title }}
